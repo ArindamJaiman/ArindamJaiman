@@ -1,70 +1,73 @@
 name: "Tic-Tac-Toe"
 
 on:
-    issues:
-        types: [opened]
+  issues:
+    types: [opened]
 
 # Prevent race conditions when multiple moves come in
 concurrency:
-    group: tictactoe-game
-    cancel-in-progress: false
+  group: tictactoe-game
+  cancel-in-progress: false
 
 jobs:
-    play:
-        runs-on: ubuntu-latest
-        if: startsWith(github.event.issue.title, 'ttt|')
-        permissions:
-            contents: write
-            issues: write
+  play:
+    runs-on: ubuntu-latest
+    if: startsWith(github.event.issue.title, 'ttt|')
+    permissions:
+      contents: write
+      issues: write
 
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Set up Python
-              uses: actions/setup-python@v5
-              with:
-                  python-version: "3.12"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
 
-            - name: React to issue
-              env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: |
-                  gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/reactions \
-                    -f content='eyes' --silent || true
+      - name: React to issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/reactions \
+            -f content='eyes' --silent || true
 
-            - name: Run game engine
-              env:
-                  REPOSITORY: ${{ github.repository }}
-                  ISSUE_TITLE: ${{ github.event.issue.title }}
-                  EVENT_USER_LOGIN: ${{ github.event.issue.user.login }}
-              run: python tictactoe/game.py
+      - name: Run game engine
+        env:
+          REPOSITORY: ${{ github.repository }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          EVENT_USER_LOGIN: ${{ github.event.issue.user.login }}
+        run: python tictactoe/game.py
 
-            - name: Commit and push
-              run: |
-                  git config --global user.email "action@github.com"
-                  git config --global user.name "Tic-Tac-Toe Bot"
-                  git add .
-                  git commit -m "🎮 ttt: ${{ github.event.issue.user.login }} — ${{ github.event.issue.title }}" || echo "No changes"
-                  git push
+      - name: Commit and push
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "Tic-Tac-Toe Bot"
+          git add .
+          TITLE="${{ github.event.issue.title }}"
+          USER="${{ github.event.issue.user.login }}"
+          git commit -m "🎮 ttt: ${USER} — ${TITLE}" || echo "No changes to commit"
+          git pull --rebase origin main || true
+          git push
 
-            - name: Comment and close issue
-              env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: |
-                  # Check if move had an error
-                  if [ -f /tmp/move_error.txt ]; then
-                    ERROR_MSG=$(cat /tmp/move_error.txt)
-                    gh issue comment ${{ github.event.issue.number }} \
-                      --repo ${{ github.repository }} \
-                      --body "⚠️ @${{ github.event.issue.user.login }} $ERROR_MSG
+      - name: Comment and close issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if move had an error (file is in repo, not /tmp)
+          if [ -f tictactoe/move_error.txt ]; then
+            ERROR_MSG=$(cat tictactoe/move_error.txt)
+            gh issue comment "${{ github.event.issue.number }}" \
+              --repo "${{ github.repository }}" \
+              --body "⚠️ @${{ github.event.issue.user.login }} ${ERROR_MSG}
 
-                  Check the board at https://github.com/${{ github.repository }}"
-                  else
-                    gh issue comment ${{ github.event.issue.number }} \
-                      --repo ${{ github.repository }} \
-                      --body "✅ @${{ github.event.issue.user.login }} Move recorded! Check the board at https://github.com/${{ github.repository }} 🎮"
-                  fi
-                  gh issue close ${{ github.event.issue.number }} --repo ${{ github.repository }}
+          Check the board at https://github.com/${{ github.repository }}"
+          else
+            gh issue comment "${{ github.event.issue.number }}" \
+              --repo "${{ github.repository }}" \
+              --body "✅ @${{ github.event.issue.user.login }} Move recorded! Check the board at https://github.com/${{ github.repository }} 🎮"
+          fi
+          gh issue close "${{ github.event.issue.number }}" --repo "${{ github.repository }}"

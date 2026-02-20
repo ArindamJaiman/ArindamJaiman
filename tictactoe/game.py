@@ -12,6 +12,7 @@ import re
 REPO = os.environ.get("REPOSITORY", "ArindamJaiman/ArindamJaiman")
 GAME_STATE_FILE = "tictactoe/game_state.json"
 README_FILE = "Readme.md"
+MOVE_ERROR_FILE = "tictactoe/move_error.txt"
 
 # ── Board rendering using emojis ──────────────────────────────────────────────
 CELL_DISPLAY = {
@@ -127,7 +128,6 @@ def generate_board_markdown(state):
     """Generate the Tic-Tac-Toe board as markdown for the README."""
     board = state["board"]
     current = state["current_player"]
-    game_num = state.get("move_count", 0)
     
     lines = []
     
@@ -149,7 +149,7 @@ def generate_board_markdown(state):
     lines.append("")
     
     # Build the visual board using a markdown table
-    lines.append("<div align=\"center\">")
+    lines.append('<div align="center">')
     lines.append("")
     lines.append("|   | **1** | **2** | **3** |")
     lines.append("|---|-------|-------|-------|")
@@ -208,6 +208,9 @@ def update_readme(game_markdown):
     with open(README_FILE, "r", encoding="utf-8") as f:
         content = f.read()
     
+    # Normalize line endings to \n for consistent processing
+    content = content.replace("\r\n", "\n")
+    
     # Look for existing game section markers
     start_marker = "<!-- TICTACTOE_START -->"
     end_marker = "<!-- TICTACTOE_END -->"
@@ -218,14 +221,17 @@ def update_readme(game_markdown):
         replacement = start_marker + "\n\n" + game_markdown + "\n\n" + end_marker
         content = re.sub(pattern, replacement, content, flags=re.DOTALL)
     else:
-        # Game section doesn't exist yet — this shouldn't happen if README is set up correctly
+        # Game section doesn't exist yet — add before footer
         print("WARNING: Game markers not found in README. Adding before footer.")
-        # Insert before the footer animation
-        footer_marker = '<div align="center">\n  <img src="https://user-images.githubusercontent.com/74038190/212284100'
-        if footer_marker in content:
-            content = content.replace(footer_marker, start_marker + "\n\n" + game_markdown + "\n\n" + end_marker + "\n\n" + footer_marker)
+        footer_idx = content.find('<div align="center">\n  <img src="https://user-images.githubusercontent.com/74038190/212284100')
+        if footer_idx != -1:
+            insert_content = start_marker + "\n\n" + game_markdown + "\n\n" + end_marker + "\n\n"
+            content = content[:footer_idx] + insert_content + content[footer_idx:]
+        else:
+            # Last resort: append to end
+            content += "\n\n" + start_marker + "\n\n" + game_markdown + "\n\n" + end_marker + "\n"
     
-    with open(README_FILE, "w", encoding="utf-8") as f:
+    with open(README_FILE, "w", encoding="utf-8", newline="\n") as f:
         f.write(content)
 
 
@@ -242,6 +248,10 @@ def main():
     command = parts[1] if len(parts) > 1 else ""
     
     state = load_game_state()
+    
+    # Clean up any previous error file
+    if os.path.exists(MOVE_ERROR_FILE):
+        os.remove(MOVE_ERROR_FILE)
     
     if command == "new":
         state = new_game()
@@ -261,8 +271,9 @@ def main():
         success, message = make_move(state, position, player_login)
         if not success:
             print(f"MOVE FAILED: {message}")
-            # Still update README with current state + error
-            with open("/tmp/move_error.txt", "w") as f:
+            # Write error to a file in the repo (not /tmp) so later steps can read it
+            os.makedirs(os.path.dirname(MOVE_ERROR_FILE), exist_ok=True)
+            with open(MOVE_ERROR_FILE, "w") as f:
                 f.write(message)
         else:
             save_game_state(state)
