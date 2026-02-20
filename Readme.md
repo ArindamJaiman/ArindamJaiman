@@ -3,7 +3,7 @@
 </div>
 
 <div align="center">
-  <h3>👨‍💻 Tech Enthusiast | Full Stack Developer | Open Source Contributor</h3>
+  <h3>👨‍💻 Tech Enthusiast | Full Stack Developer | Code Freak</h3>
   
   <a href="https://github.com/ArindamJaiman">
     <img src="https://readme-typing-svg.herokuapp.com/?lines=Eat();Sleep();Code();Repeat();&font=Fira%20Code&center=true&width=400&height=30&duration=3000&pause=1000&color=F75C7E&vCenter=true" alt="Typing Animation" />
@@ -28,15 +28,15 @@
 
 ```javascript
 const arindam = {
-    code: ["Javascript", "Python", "TypeScript"],
+    code: ["Python", "C++", "C", "Java", "Javascript", "TypeScript"],
     askMeAbout: ["Web Dev", "Tech", "Open Source"],
     technologies: {
         frontEnd: ["React", "Next.js", "Tailwind CSS"],
-        backEnd: ["Node.js", "Express", "MongoDB"],
-        tools: ["Git", "Docker", "VS Code"]
+        backEnd: ["Supabase", "Node.js", "MongoDB"],
+        tools: ["Git", "Docker", "WSL"]
     },
     currentFocus: "Building scalable web applications",
-    funFact: "I turn coffee into code ☕"
+    funFact: "I turn ideas into code while sipping coffee ☕"
 };
 ```
 
@@ -98,6 +98,18 @@ const arindam = {
   <a href="https://github.com/ryo-ma/github-profile-trophy">
     <img src="https://github-profile-trophy.vercel.app/?username=ArindamJaiman&theme=onedark&no-frame=true&no-bg=true&margin-w=4" alt="Trophies" />
   </a>
+</div>
+
+<br/>
+
+## 🐍 Contribution Snake
+
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ArindamJaiman/ArindamJaiman/output/github-snake-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/ArindamJaiman/ArindamJaiman/output/github-snake.svg" />
+    <img alt="Snake animation" src="https://raw.githubusercontent.com/ArindamJaiman/ArindamJaiman/output/github-snake.svg" />
+  </picture>
 </div>
 
 <br/>
