@@ -113,6 +113,42 @@ const arindam = {
 </div>
 
 <br/>
+
+<!-- TICTACTOE_START -->
+
+## 🎮 Community Tic-Tac-Toe
+
+**It's ❌ X's turn!** Click an empty cell to make your move. Anyone can play! 👋
+
+<!-- TICTACTOE_BOARD_START -->
+
+<div align="center">
+
+|   | **1** | **2** | **3** |
+|---|-------|-------|-------|
+| **A** | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C0&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C1&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C2&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) |
+| **B** | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C3&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C4&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C5&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) |
+| **C** | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C6&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C7&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C8&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) |
+
+</div>
+
+<!-- TICTACTOE_BOARD_END -->
+
+<details>
+<summary><b>🤔 How does this work?</b></summary>
+<br/>
+
+1. Click on any ⬜ empty cell above
+2. It opens a GitHub Issue — just click **Submit new issue**
+3. A GitHub Action processes your move and updates the board
+4. The board refreshes with your move! Players alternate between ❌ and ⭕
+
+*Built with Python & GitHub Actions — no backend server needed!*
+
+</details>
+
+<!-- TICTACTOE_END -->
+
 <br/>
 
 <div align="center">
