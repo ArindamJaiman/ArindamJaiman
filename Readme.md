@@ -159,13 +159,13 @@ const arindam = {
 
 <div align="center">
   <h3>🤝 Connect With Me</h3>
-  <a href="https://linkedin.com/in/YOUR_LINKEDIN_USERNAME_HERE">
+  <a href="https://www.linkedin.com/in/arindam-jaiman-6149a82ab">
     <img src="https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
   </a>
-  <a href="mailto:YOUR_EMAIL_HERE">
+  <a href="mailto:arindamjaiman@gmail.com">
     <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
   </a>
-  <a href="https://twitter.com/YOUR_TWITTER_USERNAME_HERE">
+  <a href="https://x.com/Arindam_Jaiman">
     <img src="https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=Twitter&logoColor=white" alt="Twitter" />
   </a>
 </div>
