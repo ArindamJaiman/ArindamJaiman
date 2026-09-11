@@ -1,19 +1,25 @@
 {
-    "board": [
-        " ",
-        " ",
-        " ",
-        " ",
-        " ",
-        " ",
-        " ",
-        " ",
-        " "
-    ],
-    "current_player": "X",
-    "game_over": false,
-    "winner": null,
-    "move_count": 0,
-    "last_player": null,
-    "recent_moves": []
+  "board": [
+    " ",
+    " ",
+    " ",
+    " ",
+    "X",
+    " ",
+    " ",
+    " ",
+    " "
+  ],
+  "current_player": "O",
+  "game_over": false,
+  "winner": null,
+  "move_count": 1,
+  "last_player": "ramswarooppatel",
+  "recent_moves": [
+    {
+      "player": "ramswarooppatel",
+      "symbol": "X",
+      "position": 4
+    }
+  ]
 }

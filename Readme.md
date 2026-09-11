@@ -118,7 +118,7 @@ const arindam = {
 
 ## 🎮 Community Tic-Tac-Toe
 
-**It's ❌ X's turn!** Click an empty cell to make your move. Anyone can play! 👋
+**It's ⭕ O's turn!** Click an empty cell to make your move. Anyone can play! 👋
 
 <!-- TICTACTOE_BOARD_START -->
 
@@ -127,7 +127,7 @@ const arindam = {
 |   | **1** | **2** | **3** |
 |---|-------|-------|-------|
 | **A** | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C0&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C1&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C2&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) |
-| **B** | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C3&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C4&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C5&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) |
+| **B** | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C3&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) | ❌ | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C5&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) |
 | **C** | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C6&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C7&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) | [⬜](https://github.com/ArindamJaiman/ArindamJaiman/issues/new?title=ttt%7Cmove%7C8&body=Just+push+%27Submit+new+issue%27.+You+don%27t+need+to+do+anything+else.) |
 
 </div>
@@ -146,6 +146,13 @@ const arindam = {
 *Built with Python & GitHub Actions — no backend server needed!*
 
 </details>
+
+**Last moves:**
+
+| # | Player | Symbol | Position |
+|---|--------|--------|----------|
+| 1 | [@ramswarooppatel](https://github.com/ramswarooppatel) | ❌ | 4 |
+
 
 <!-- TICTACTOE_END -->
 
