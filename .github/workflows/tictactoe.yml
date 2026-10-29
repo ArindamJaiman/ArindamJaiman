@@ -17,57 +17,51 @@ jobs:
       contents: write
       issues: write
 
+    # Issue titles are attacker-controlled: they only ever reach the shell
+    # through env vars, never through ${{ }} inside a run: script.
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPOSITORY: ${{ github.repository }}
+      ISSUE_NUMBER: ${{ github.event.issue.number }}
+      ISSUE_TITLE: ${{ github.event.issue.title }}
+      EVENT_USER_LOGIN: ${{ github.event.issue.user.login }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
 
       - name: React to issue
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/reactions \
-            -f content='eyes' --silent || true
+        run: gh api "repos/$REPOSITORY/issues/$ISSUE_NUMBER/reactions" -f content=eyes --silent || true
 
       - name: Run game engine
-        env:
-          REPOSITORY: ${{ github.repository }}
-          ISSUE_TITLE: ${{ github.event.issue.title }}
-          EVENT_USER_LOGIN: ${{ github.event.issue.user.login }}
-        run: python tictactoe/game.py
+        run: python3 tictactoe/game.py
 
       - name: Commit and push
         run: |
-          git config --global user.email "action@github.com"
-          git config --global user.name "Tic-Tac-Toe Bot"
-          git add .
-          TITLE="${{ github.event.issue.title }}"
-          USER="${{ github.event.issue.user.login }}"
-          git commit -m "🎮 ttt: ${USER} — ${TITLE}" || echo "No changes to commit"
-          git pull --rebase origin main || true
+          git config user.name "Tic-Tac-Toe Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Readme.md tictactoe/game_state.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "🎮 ttt: $EVENT_USER_LOGIN — $ISSUE_TITLE"
+          git pull --rebase origin main
           git push
 
       - name: Comment and close issue
+        if: always()
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JOB_STATUS: ${{ job.status }}
         run: |
-          # Check if move had an error (file is in repo, not /tmp)
-          if [ -f tictactoe/move_error.txt ]; then
-            ERROR_MSG=$(cat tictactoe/move_error.txt)
-            gh issue comment "${{ github.event.issue.number }}" \
-              --repo "${{ github.repository }}" \
-              --body "⚠️ @${{ github.event.issue.user.login }} ${ERROR_MSG}
-
-          Check the board at https://github.com/${{ github.repository }}"
+          ERROR_FILE="$RUNNER_TEMP/ttt_error.txt"
+          if [ "$JOB_STATUS" != "success" ]; then
+            MSG="💥 Something went wrong while recording that move. Give it another try in a minute."
+          elif [ -f "$ERROR_FILE" ]; then
+            MSG="⚠️ $(cat "$ERROR_FILE")"
           else
-            gh issue comment "${{ github.event.issue.number }}" \
-              --repo "${{ github.repository }}" \
-              --body "✅ @${{ github.event.issue.user.login }} Move recorded! Check the board at https://github.com/${{ github.repository }} 🎮"
+            MSG="✅ Move recorded!"
           fi
-          gh issue close "${{ github.event.issue.number }}" --repo "${{ github.repository }}"
+          gh issue comment "$ISSUE_NUMBER" --repo "$REPOSITORY" \
+            --body "@$EVENT_USER_LOGIN $MSG Check the board at https://github.com/$REPOSITORY 🎮"
+          gh issue close "$ISSUE_NUMBER" --repo "$REPOSITORY"
